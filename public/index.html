@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRUD Ega Silfhia</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+    }
+
+    header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 1.1em;
+      opacity: 0.9;
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      padding: 30px;
+    }
+
+    @media (max-width: 900px) {
+      .content {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .section {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 25px;
+      border: 2px solid #e9ecef;
+    }
+
+    .section h2 {
+      color: #667eea;
+      margin-bottom: 20px;
+      font-size: 1.5em;
+      border-bottom: 2px solid #667eea;
+      padding-bottom: 10px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #333;
+      font-weight: 600;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+      font-size: 1em;
+      transition: border-color 0.3s;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-create {
+      background: #28a745;
+      color: white;
+    }
+
+    .btn-create:hover {
+      background: #218838;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+    }
+
+    .btn-update {
+      background: #ffc107;
+      color: black;
+      width: 48%;
+      display: inline-block;
+      margin-right: 2%;
+    }
+
+    .btn-update:hover {
+      background: #e0a800;
+      transform: translateY(-2px);
+    }
+
+    .btn-delete {
+      background: #dc3545;
+      color: white;
+      width: 48%;
+      display: inline-block;
+      margin-left: 2%;
+    }
+
+    .btn-delete:hover {
+      background: #c82333;
+      transform: translateY(-2px);
+    }
+
+    .btn-clear {
+      background: #6c757d;
+      color: white;
+    }
+
+    .btn-clear:hover {
+      background: #5a6268;
+    }
+
+    .table-container {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: white;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    th {
+      background: #667eea;
+      color: white;
+      padding: 15px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    td {
+      padding: 12px 15px;
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    tr:hover {
+      background: #f0f0f0;
+    }
+
+    tr td:last-child {
+      display: flex;
+      gap: 5px;
+    }
+
+    .btn-small {
+      flex: 1;
+      padding: 8px;
+      font-size: 0.85em;
+      margin: 0 !important;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .btn-edit {
+      background: #ffc107;
+      color: black;
+    }
+
+    .btn-edit:hover {
+      background: #e0a800;
+    }
+
+    .btn-remove {
+      background: #dc3545;
+      color: white;
+    }
+
+    .btn-remove:hover {
+      background: #c82333;
+    }
+
+    .alert {
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .alert-success {
+      background: #d4edda;
+      border: 2px solid #28a745;
+      color: #155724;
+    }
+
+    .alert-error {
+      background: #f8d7da;
+      border: 2px solid #dc3545;
+      color: #721c24;
+    }
+
+    .alert-info {
+      background: #d1ecf1;
+      border: 2px solid #0c5460;
+      color: #0c5460;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: #999;
+    }
+
+    .empty-state svg {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 20px;
+      opacity: 0.5;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #e9ecef;
+    }
+
+    .stat-box {
+      text-align: center;
+      padding: 15px;
+      background: white;
+      border-radius: 5px;
+      border: 2px solid #e9ecef;
+    }
+
+    .stat-number {
+      font-size: 2em;
+      font-weight: bold;
+      color: #667eea;
+    }
+
+    .stat-label {
+      font-size: 0.9em;
+      color: #999;
+      margin-top: 5px;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .button-group button {
+      flex: 1;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>📚 Student Management System</h1>
+      <p>CRUD Tambah, Lihat, Ubah, dan Hapus Data Mahasiswa</p>
+    </header>
+
+    <div class="content">
+      <!-- Form Section -->
+      <div class="section">
+        <h2>📝 Form Input Data</h2>
+        
+        <div id="alert-container"></div>
+
+        <div class="stats">
+          <div class="stat-box">
+            <div class="stat-number" id="totalCount">0</div>
+            <div class="stat-label">Total Data</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number" id="selectedId">-</div>
+            <div class="stat-label">ID Terpilih</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number" id="statusText">SIAP</div>
+            <div class="stat-label">Status</div>
+          </div>
+        </div>
+
+        <form id="studentForm">
+          <div class="form-group">
+            <label for="id">ID (otomatiss / Untuk Update)</label>
+            <input type="number" id="id" placeholder="Auto generated" disabled>
+          </div>
+
+          <div class="form-group">
+            <label for="nama">✏️ Nama Lengkap</label>
+            <input type="text" id="nama" placeholder="Masukkan nama mahasiswa" required>
+          </div>
+
+          <div class="form-group">
+            <label for="jurusan">🏢 Jurusan</label>
+            <select id="jurusan" required>
+              <option value="">-- Pilih Jurusan --</option>
+              <option value="Teknik Informatika">Teknik Informatika</option>
+              <option value="Teknik Komputer">Teknik Komputer</option>
+              <option value="Sistem Informasi">Sistem Informasi</option>
+              <option value="Teknik Elektro">Teknik Elektro</option>
+              <option value="Teknik Mesin">Teknik Mesin</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="semester">📅 Semester</label>
+            <select id="semester" required>
+              <option value="">-- Pilih Semester --</option>
+              <option value="1">Semester 1</option>
+              <option value="2">Semester 2</option>
+              <option value="3">Semester 3</option>
+              <option value="4">Semester 4</option>
+              <option value="5">Semester 5</option>
+              <option value="6">Semester 6</option>
+              <option value="7">Semester 7</option>
+              <option value="8">Semester 8</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn-create" id="submitBtn">Tabah</button>
+          
+          <div class="button-group">
+            <button type="button" class="btn-update" id="updateBtn" disabled>Update</button>
+            <button type="button" class="btn-delete" id="deleteBtn" disabled>DELETE</button>
+          </div>
+
+          <button type="button" class="btn-clear" id="clearBtn">🔄 RESET FORM</button>
+        </form>
+      </div>
+
+      <!-- Table Section -->
+      <div class="section">
+        <h2>📊 Daftar Data Mahasiswa</h2>
+        
+        <div class="table-container" id="tableContainer">
+          <table id="studentTable">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nama</th>
+                <th>Jurusan</th>
+                <th>Semester</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody">
+              <!-- Data akan ditambahkan di sinii -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_URL = 'http://localhost:3000/api/students';
+    let editingId = null;
+
+    // DOM Elements
+    const form = document.getElementById('studentForm');
+    const idInput = document.getElementById('id');
+    const namaInput = document.getElementById('nama');
+    const jurusanInput = document.getElementById('jurusan');
+    const semesterInput = document.getElementById('semester');
+    const submitBtn = document.getElementById('submitBtn');
+    const updateBtn = document.getElementById('updateBtn');
+    const deleteBtn = document.getElementById('deleteBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const tableBody = document.getElementById('tableBody');
+    const alertContainer = document.getElementById('alert-container');
+    const totalCount = document.getElementById('totalCount');
+    const selectedId = document.getElementById('selectedId');
+    const statusText = document.getElementById('statusText');
+
+    // Load data on page load
+    loadStudents();
+
+    // Event Listeners
+    form.addEventListener('submit', handleCreate);
+    updateBtn.addEventListener('click', handleUpdate);
+    deleteBtn.addEventListener('click', handleDelete);
+    clearBtn.addEventListener('click', resetForm);
+
+    // Load all students
+    async function loadStudents() {
+      try {
+        const response = await fetch(API_URL);
+        const data = await response.json();
+        
+        if (data.status === 'success') {
+          renderTable(data.data);
+          updateStats(data.data);
+          showAlert(data.message, 'info');
+        }
+      } catch (error) {
+        showAlert('Gagal memuat data: ' + error.message, 'error');
+      }
+    }
+
+    // Render table
+    function renderTable(students) {
+      tableBody.innerHTML = '';
+      
+      if (students.length === 0) {
+        tableBody.innerHTML = `
+          <tr>
+            <td colspan="5" class="empty-state">
+              <div>📭 Tidak ada data</div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      students.forEach(student => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td><strong>#${student.id}</strong></td>
+          <td>${student.nama}</td>
+          <td>${student.jurusan}</td>
+          <td>${student.semester}</td>
+          <td>
+            <button class="btn-small btn-edit" onclick="editStudent(${student.id})">Edit</button>
+            <button class="btn-small btn-remove" onclick="removeStudent(${student.id})">Hapus</button>
+          </td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    // Create student
+    async function handleCreate(e) {
+      e.preventDefault();
+      
+      if (editingId) {
+        await handleUpdate();
+        return;
+      }
+
+      const nama = namaInput.value.trim();
+      const jurusan = jurusanInput.value;
+      const semester = parseInt(semesterInput.value);
+
+      if (!nama || !jurusan || !semester) {
+        showAlert('Semua field harus diisi!', 'error');
+        return;
+      }
+
+      try {
+        statusText.textContent = 'MENGIRIM...';
+        const response = await fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nama, jurusan, semester })
+        });
+
+        const data = await response.json();
+
+        if (data.status === 'success') {
+          showAlert('✅ ' + data.message, 'success');
+          loadStudents();
+          resetForm();
+        } else {
+          showAlert('❌ ' + data.message, 'error');
+        }
+      } catch (error) {
+        showAlert('Gagal menambah data: ' + error.message, 'error');
+      } finally {
+        statusText.textContent = 'SIAP';
+      }
+    }
+
+    // Edit student
+    function editStudent(id) {
+      const response = fetch(`${API_URL}/${id}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === 'success') {
+            const student = data.data;
+            idInput.value = student.id;
+            namaInput.value = student.nama;
+            jurusanInput.value = student.jurusan;
+            semesterInput.value = student.semester;
+            editingId = student.id;
+            
+            selectedId.textContent = student.id;
+            statusText.textContent = 'EDIT MODE';
+            
+            updateBtn.disabled = false;
+            deleteBtn.disabled = false;
+            submitBtn.textContent = '💾 SAVE (Simpan Perubahan)';
+            submitBtn.style.background = '#ffc107';
+            
+            namaInput.focus();
+            showAlert('Mode edit: ID ' + id + ' - Ubah data dan klik SAVE', 'info');
+          }
+        })
+        .catch(error => showAlert('Gagal memuat data: ' + error.message, 'error'));
+    }
+
+    // Update student
+    async function handleUpdate() {
+      if (!editingId) return;
+
+      const nama = namaInput.value.trim();
+      const jurusan = jurusanInput.value;
+      const semester = parseInt(semesterInput.value);
+
+      if (!nama || !jurusan || !semester) {
+        showAlert('Semua field harus diisi!', 'error');
+        return;
+      }
+
+      try {
+        statusText.textContent = 'MEMPERBARUI...';
+        const response = await fetch(`${API_URL}/${editingId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nama, jurusan, semester })
+        });
+
+        const data = await response.json();
+
+        if (data.status === 'success') {
+          showAlert('✅ ' + data.message, 'success');
+          loadStudents();
+          resetForm();
+        } else {
+          showAlert('❌ ' + data.message, 'error');
+        }
+      } catch (error) {
+        showAlert('Gagal mengubah data: ' + error.message, 'error');
+      } finally {
+        statusText.textContent = 'SIAP';
+      }
+    }
+
+    // Delete student
+    async function handleDelete() {
+      if (!editingId) return;
+
+      if (!confirm(`Yakin hapus data ID ${editingId}?`)) return;
+
+      try {
+        statusText.textContent = 'MENGHAPUS...';
+        const response = await fetch(`${API_URL}/${editingId}`, {
+          method: 'DELETE'
+        });
+
+        const data = await response.json();
+
+        if (data.status === 'success') {
+          showAlert('🗑️ ' + data.message, 'success');
+          loadStudents();
+          resetForm();
+        } else {
+          showAlert('❌ ' + data.message, 'error');
+        }
+      } catch (error) {
+        showAlert('Gagal menghapus data: ' + error.message, 'error');
+      } finally {
+        statusText.textContent = 'SIAP';
+      }
+    }
+
+    // Delete from table
+    function removeStudent(id) {
+      if (!confirm(`Yakin hapus data ID ${id}?`)) return;
+      
+      fetch(`${API_URL}/${id}`, { method: 'DELETE' })
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === 'success') {
+            showAlert('🗑️ ' + data.message, 'success');
+            loadStudents();
+          }
+        })
+        .catch(error => showAlert('Gagal menghapus data: ' + error.message, 'error'));
+    }
+
+    // Reset form
+    function resetForm() {
+      form.reset();
+      idInput.value = '';
+      editingId = null;
+      selectedId.textContent = '-';
+      statusText.textContent = 'SIAP';
+      submitBtn.textContent = '➕ CREATE (Tambah Data Baru)';
+      submitBtn.style.background = '#28a745';
+      updateBtn.disabled = true;
+      deleteBtn.disabled = true;
+    }
+
+    // Show alert
+    function showAlert(message, type) {
+      const alert = document.createElement('div');
+      alert.className = `alert alert-${type}`;
+      alert.textContent = message;
+      alertContainer.innerHTML = '';
+      alertContainer.appendChild(alert);
+      
+      setTimeout(() => {
+        alert.remove();
+      }, 4000);
+    }
+
+    // Update statistics
+    function updateStats(students) {
+      totalCount.textContent = students.length;
+    }
+  </script>
+</body>
+</html>

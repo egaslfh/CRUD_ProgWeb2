@@ -1,0 +1,190 @@
+### ========================================
+### REST CLIENT TESTING - CRUD API
+### ========================================
+
+### Setting base URL
+@baseUrl = http://localhost:3000/api
+@studentId = 1
+
+### ========================================
+### 1. GET - Mengambil Semua Data
+### ========================================
+
+### GET all students
+GET {{baseUrl}}/students
+Accept: application/json
+
+
+### ========================================
+### 2. GET - Mengambil Data Satuan (ID)
+### ========================================
+
+### GET student by ID 1
+GET {{baseUrl}}/students/1
+Accept: application/json
+
+
+### GET student by ID 2
+GET {{baseUrl}}/students/2
+Accept: application/json
+
+
+### GET student by ID 3
+GET {{baseUrl}}/students/3
+Accept: application/json
+
+
+### GET student with non-existent ID (Error Test)
+GET {{baseUrl}}/students/999
+Accept: application/json
+
+
+### ========================================
+### 3. POST - Membuat Data Baru
+### ========================================
+
+### POST - Create new student
+POST {{baseUrl}}/students
+Content-Type: application/json
+
+{
+  "nama": "Ega Pratama",
+  "jurusan": "Teknik Informatika",
+  "semester": 4
+}
+
+
+### POST - Create another student
+POST {{baseUrl}}/students
+Content-Type: application/json
+
+{
+  "nama": "Putri Handini",
+  "jurusan": "Sistem Informasi",
+  "semester": 5
+}
+
+
+### POST - Create with incomplete data (Error Test)
+POST {{baseUrl}}/students
+Content-Type: application/json
+
+{
+  "nama": "Incomplete Data"
+}
+
+
+### ========================================
+### 4. PUT - Mengupdate Data
+### ========================================
+
+### PUT - Update student with ID 1
+PUT {{baseUrl}}/students/1
+Content-Type: application/json
+
+{
+  "nama": "Ahmad Rizki Diperbarui",
+  "jurusan": "Teknik Informatika",
+  "semester": 5
+}
+
+
+### PUT - Update student with ID 2
+PUT {{baseUrl}}/students/2
+Content-Type: application/json
+
+{
+  "nama": "Siti Nurhaliza Terbaru",
+  "jurusan": "Teknik Komputer",
+  "semester": 4
+}
+
+
+### PUT - Update student with ID 3
+PUT {{baseUrl}}/students/3
+Content-Type: application/json
+
+{
+  "nama": "Budi Santoso Baru",
+  "jurusan": "Sistem Informasi",
+  "semester": 6
+}
+
+
+### PUT - Update non-existent student (Error Test)
+PUT {{baseUrl}}/students/999
+Content-Type: application/json
+
+{
+  "nama": "Unknown Student",
+  "jurusan": "Unknown",
+  "semester": 1
+}
+
+
+### ========================================
+### 5. DELETE - Menghapus Data
+### ========================================
+
+### DELETE - Delete student with ID 1
+DELETE {{baseUrl}}/students/1
+Accept: application/json
+
+
+### DELETE - Delete student with ID 2
+DELETE {{baseUrl}}/students/2
+Accept: application/json
+
+
+### DELETE - Delete student with ID 3
+DELETE {{baseUrl}}/students/3
+Accept: application/json
+
+
+### DELETE - Delete non-existent student (Error Test)
+DELETE {{baseUrl}}/students/999
+Accept: application/json
+
+
+### ========================================
+### 6. COMBINATION TEST SCENARIOS
+### ========================================
+
+### Scenario 1: Create new student, then read it
+POST {{baseUrl}}/students
+Content-Type: application/json
+
+{
+  "nama": "Muhammad Faris",
+  "jurusan": "Teknik Informatika",
+  "semester": 4
+}
+
+###
+
+GET {{baseUrl}}/students
+
+###
+
+### Scenario 2: Update dan verify
+PUT {{baseUrl}}/students/1
+Content-Type: application/json
+
+{
+  "nama": "Updated Name",
+  "jurusan": "Teknik Informatika",
+  "semester": 6
+}
+
+###
+
+GET {{baseUrl}}/students/1
+
+###
+
+### Scenario 3: Delete dan verify all data
+DELETE {{baseUrl}}/students/1
+
+###
+
+GET {{baseUrl}}/students

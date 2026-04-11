@@ -1,0 +1,21 @@
+{
+  "name": "crud-app",
+  "version": "1.0.0",
+  "description": "CRUD Application with REST Client",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "keywords": ["crud", "rest", "api"],
+  "author": "Ega",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "body-parser": "^1.20.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
