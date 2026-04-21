@@ -1,19 +1,19 @@
-# 📚 CRUD Application with REST Client Testing
+# CRUD Application with REST Client Testing
 
 Aplikasi CRUD lengkap dengan Node.js/Express dan HTTP Testing menggunakan REST Client.
 
-## 📋 Fitur
+##  Fitur
 
-✅ **GET** - Mengambil semua data / data satuan  
-✅ **POST** - Membuat data baru  
-✅ **PUT** - Mengupdate data  
-✅ **DELETE** - Menghapus data  
-✅ **REST Client** - File `.http` untuk testing API  
-✅ **Web Interface** - Dashboard interaktif untuk CRUD  
+ **GET** - Mengambil semua data / data satuan  
+ **POST** - Membuat data baru  
+ **PUT** - Mengupdate data  
+ **DELETE** - Menghapus data  
+ **REST Client** - File `.http` untuk testing API  
+ **Web Interface** - Dashboard interaktif untuk CRUD  
 
 ---
 
-## 🚀 Cara Menjalankan
+##  Cara Menjalankan
 
 ### 1. Install Dependencies
 ```bash
@@ -38,7 +38,7 @@ Server akan berjalan di: **http://localhost:3000**
 
 ---
 
-## 📝 API Endpoints
+## API Endpoints
 
 ### GET - Mengambil Data
 
@@ -86,7 +86,7 @@ DELETE http://localhost:3000/api/students/1
 
 ---
 
-## 🧪 Testing dengan REST Client
+##  Testing dengan REST Client
 
 ### Install VS Code Extension
 1. Buka VS Code
@@ -101,18 +101,18 @@ DELETE http://localhost:3000/api/students/1
 3. Lihat response di panel kanan
 
 Contoh lengkap ada di file `test.http` dengan berbagai skenario testing:
-- ✅ GET all students
-- ✅ GET single student
-- ✅ GET non-existent student (error handling)
-- ✅ POST create new student
-- ✅ POST with incomplete data (error handling)
-- ✅ PUT update student
-- ✅ DELETE student
-- ✅ Dan banyak lagi...
+-  GET all students
+-  GET single student
+-  GET non-existent student (error handling)
+-  POST create new student
+-  POST with incomplete data (error handling)
+-  PUT update student
+-  DELETE student
+-  Dan banyak lagi...
 
 ---
 
-## 📁 Struktur Project
+##  Struktur Project
 
 ```
 crud-app/
@@ -127,7 +127,7 @@ crud-app/
 
 ---
 
-## 🛠️ Teknologi yang Digunakan
+##  Teknologi yang Digunakan
 
 - **Node.js** - Runtime
 - **Express.js** - Web framework
@@ -137,7 +137,7 @@ crud-app/
 
 ---
 
-## 📊 Contoh Response
+##  Contoh Response
 
 ### Success Response
 ```json
@@ -164,19 +164,11 @@ crud-app/
 
 ---
 
-## 🎯 Catatan Penting
+##  Catatan Penting
 
 - Data disimpan in-memory (hilang saat server restart)
 - ID auto-increment dimulai dari 4 (karena ada 3 data awal)
 - Validasi: semua field (nama, jurusan, semester) harus diisi
 - CORS diaktifkan untuk akses dari frontend
 
----
-
-## 👨‍💻 Author
-Ega Pratama - Semester 4 - Progweb2
-
----
-
-## 📞 Support
-Untuk pertanyaan atau kendala, silakan buka issue di repository.
+-
